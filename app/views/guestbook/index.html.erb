@@ -70,10 +70,18 @@
   </header>
 
   <%= form_with model: @entry, url: guestbook_path, class: "guestbook__form" do |f| %>
-    <%= render "foundation/components/text_field", form: f, attribute: :name, label: "Name (optional)",
+    <%= md_text_field f, :name, label: "Name (optional)",
           hint: "Who you are, or leave it blank to sign anonymously." %>
-    <%= render "foundation/components/text_field", form: f, attribute: :message, label: "Message",
-          type: :textarea, hint: "A few words — up to 500 characters.", options: { rows: 4, maxlength: 500, required: true } %>
+
+    <div class="md-field <%= "md-field--error" if @entry.errors[:message].any? %>">
+      <%= f.label :message, "Message", class: "md-field__label" %>
+      <%= f.text_area :message, rows: 4, maxlength: 500, required: true, class: "md-field__input" %>
+      <% if @entry.errors[:message].any? %>
+        <p class="md-field__support" id="guestbook_entry_message_error"><%= @entry.errors[:message].to_sentence %></p>
+      <% else %>
+        <p class="md-field__support" id="guestbook_entry_message_hint">A few words — up to 500 characters.</p>
+      <% end %>
+    </div>
     <div class="guestbook__actions">
       <%= render "foundation/components/button", label: "Sign the wall", variant: :filled, type: "submit" %>
     </div>
