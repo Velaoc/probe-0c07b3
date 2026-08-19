@@ -18,9 +18,6 @@
       </button>
       <% unless user_signed_in? %>
         <%= link_to "Sign in", new_user_session_path, class: "md-button md-button--outlined md-top-app-bar__account" %>
-        <% unless Foundation.surface_feature?(:shop) %>
-          <%= link_to "Get started", new_user_registration_path, class: "md-button md-button--filled md-top-app-bar__cta" %>
-        <% end %>
       <% end %>
     </div>
   </div>
