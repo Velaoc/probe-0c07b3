@@ -1,14 +1,75 @@
 <% identity = Rails.configuration.x.foundation %>
 <% title "Probe Guestbook" %>
 
+<style>
+  .guestbook {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+  .guestbook__header { text-align: center; margin-bottom: 2rem; }
+  .guestbook__header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0.25rem 0 0.5rem;
+  }
+  .guestbook__lede {
+    margin: 0;
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+  }
+  .guestbook__form {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+    border-radius: 1.5rem;
+    background: var(--md-sys-color-surface-container-low, #f7f2fa);
+    margin-bottom: 2.5rem;
+  }
+  .guestbook__actions { display: flex; justify-content: flex-end; }
+  .guestbook__wall-heading { font-size: 1.25rem; font-weight: 600; margin: 0 0 1rem; }
+  .guestbook__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .guestbook__entry { padding: 1rem 1.25rem; }
+  .guestbook__entry-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.375rem;
+    flex-wrap: wrap;
+  }
+  .guestbook__name { font-weight: 600; }
+  .guestbook__time {
+    font-size: 0.8125rem;
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+  }
+  .guestbook__message {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .guestbook__empty {
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+    padding: 1rem 0;
+  }
+</style>
+
 <section class="guestbook">
   <header class="guestbook__header">
-    <p class="md-section__eyebrow">Probe Guestbook</p>
+    <p class="md-section__eyebrow"><%= identity[:application_name] %></p>
     <h1>Leave a note.</h1>
     <p class="guestbook__lede">Say hello, drop a thought, sign the wall. Newest first, always.</p>
   </header>
 
-  <%= form_with model: @entry, url: root_path, class: "guestbook__form" do |f| %>
+  <%= form_with model: @entry, url: guestbook_path, class: "guestbook__form" do |f| %>
     <%= render "foundation/components/text_field", form: f, attribute: :name, label: "Name (optional)",
           hint: "Who you are, or leave it blank to sign anonymously." %>
     <%= render "foundation/components/text_field", form: f, attribute: :message, label: "Message",
